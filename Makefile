@@ -1,4 +1,5 @@
 PKG_NAME := Routes
-URL := https://pypi.python.org/packages/source/R/Routes/Routes-2.2.tar.gz
+URL := https://pypi.python.org/packages/source/R/Routes/Routes-2.3.1.tar.gz
+ARCHIVES :=
 
 include ../common/Makefile.common
