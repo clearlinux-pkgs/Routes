@@ -4,20 +4,22 @@
 #
 Name     : Routes
 Version  : 2.4.1
-Release  : 29
-URL      : http://pypi.debian.net/Routes/Routes-2.4.1.tar.gz
-Source0  : http://pypi.debian.net/Routes/Routes-2.4.1.tar.gz
+Release  : 30
+URL      : https://files.pythonhosted.org/packages/33/38/ea827837e68d9c7dde4cff7ec122a93c319f0effc08ce92a17095576603f/Routes-2.4.1.tar.gz
+Source0  : https://files.pythonhosted.org/packages/33/38/ea827837e68d9c7dde4cff7ec122a93c319f0effc08ce92a17095576603f/Routes-2.4.1.tar.gz
 Summary  : Routing Recognition and Generation Tools
 Group    : Development/Tools
 License  : MIT
+Requires: Routes-python3
+Requires: Routes-license
 Requires: Routes-python
 Requires: repoze.lru
 Requires: six
 BuildRequires : WebTest
+BuildRequires : buildreq-distutils3
 BuildRequires : coverage-python
 BuildRequires : pbr
 BuildRequires : pip
-BuildRequires : python-dev
 BuildRequires : python3-dev
 BuildRequires : repoze.lru
 BuildRequires : repoze.lru-python
@@ -26,37 +28,61 @@ BuildRequires : six
 BuildRequires : webob-python
 
 %description
-routes-logo-haas.svg
-Routes logo by Christoph Boehme, 2009.
+URL's to Controllers/Actions and generating URL's. Routes makes it easy to
+        create pretty and concise URL's that are RESTful with little effort.
+        
+        Speedy and dynamic URL generation means you get a URL with minimal cruft
+        (no big dangling query args). Shortcut features like Named Routes cut down
+        on repetitive typing.
+
+%package license
+Summary: license components for the Routes package.
+Group: Default
+
+%description license
+license components for the Routes package.
+
 
 %package python
 Summary: python components for the Routes package.
 Group: Default
+Requires: Routes-python3
 Provides: routes-python
 
 %description python
 python components for the Routes package.
 
 
+%package python3
+Summary: python3 components for the Routes package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the Routes package.
+
+
 %prep
 %setup -q -n Routes-2.4.1
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1492438718
-python2 setup.py build -b py2
+export SOURCE_DATE_EPOCH=1532376644
 python3 setup.py build -b py3
 
 %check
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python3.6/site-packages python3 setup.py test
+PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
 %install
-export SOURCE_DATE_EPOCH=1492438718
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+mkdir -p %{buildroot}/usr/share/doc/Routes
+cp LICENSE.txt %{buildroot}/usr/share/doc/Routes/LICENSE.txt
+python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -64,7 +90,13 @@ echo ----[ mark ]----
 %files
 %defattr(-,root,root,-)
 
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/Routes/LICENSE.txt
+
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python2*/*
+
+%files python3
+%defattr(-,root,root,-)
 /usr/lib/python3*/*
