@@ -4,26 +4,23 @@
 #
 Name     : Routes
 Version  : 2.4.1
-Release  : 32
+Release  : 33
 URL      : https://files.pythonhosted.org/packages/33/38/ea827837e68d9c7dde4cff7ec122a93c319f0effc08ce92a17095576603f/Routes-2.4.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/33/38/ea827837e68d9c7dde4cff7ec122a93c319f0effc08ce92a17095576603f/Routes-2.4.1.tar.gz
 Summary  : Routing Recognition and Generation Tools
 Group    : Development/Tools
 License  : MIT
-Requires: Routes-python3
-Requires: Routes-license
-Requires: Routes-python
+Requires: Routes-license = %{version}-%{release}
+Requires: Routes-python = %{version}-%{release}
+Requires: Routes-python3 = %{version}-%{release}
 Requires: repoze.lru
 Requires: six
 BuildRequires : WebTest
 BuildRequires : buildreq-distutils3
 BuildRequires : coverage-python
-BuildRequires : pbr
-BuildRequires : pip
-BuildRequires : python3-dev
+BuildRequires : nose
 BuildRequires : repoze.lru
 BuildRequires : repoze.lru-python
-BuildRequires : setuptools
 BuildRequires : six
 BuildRequires : webob-python
 
@@ -46,7 +43,7 @@ license components for the Routes package.
 %package python
 Summary: python components for the Routes package.
 Group: Default
-Requires: Routes-python3
+Requires: Routes-python3 = %{version}-%{release}
 Provides: routes-python
 
 %description python
@@ -70,8 +67,9 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532376644
-python3 setup.py build -b py3
+export SOURCE_DATE_EPOCH=1546126760
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %check
 export http_proxy=http://127.0.0.1:9/
@@ -80,9 +78,9 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/Routes
-cp LICENSE.txt %{buildroot}/usr/share/doc/Routes/LICENSE.txt
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/Routes
+cp LICENSE.txt %{buildroot}/usr/share/package-licenses/Routes/LICENSE.txt
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -91,8 +89,8 @@ echo ----[ mark ]----
 %defattr(-,root,root,-)
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/Routes/LICENSE.txt
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/Routes/LICENSE.txt
 
 %files python
 %defattr(-,root,root,-)
