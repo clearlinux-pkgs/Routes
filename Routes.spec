@@ -4,7 +4,7 @@
 #
 Name     : Routes
 Version  : 2.4.1
-Release  : 35
+Release  : 37
 URL      : https://files.pythonhosted.org/packages/33/38/ea827837e68d9c7dde4cff7ec122a93c319f0effc08ce92a17095576603f/Routes-2.4.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/33/38/ea827837e68d9c7dde4cff7ec122a93c319f0effc08ce92a17095576603f/Routes-2.4.1.tar.gz
 Summary  : Routing Recognition and Generation Tools
@@ -23,6 +23,7 @@ BuildRequires : repoze.lru
 BuildRequires : repoze.lru-python
 BuildRequires : six
 BuildRequires : webob-python
+BuildRequires : webtest-python
 
 %description
 URL's to Controllers/Actions and generating URL's. Routes makes it easy to
@@ -61,13 +62,19 @@ python3 components for the Routes package.
 
 %prep
 %setup -q -n Routes-2.4.1
+cd %{_builddir}/Routes-2.4.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1546126760
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1574290503
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
@@ -75,11 +82,12 @@ python3 setup.py build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
+PYTHONPATH=%{buildroot}$(python -c "import sys; print(sys.path[-1])") python setup.py test
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Routes
-cp LICENSE.txt %{buildroot}/usr/share/package-licenses/Routes/LICENSE.txt
+cp %{_builddir}/Routes-2.4.1/LICENSE.txt %{buildroot}/usr/share/package-licenses/Routes/9307dc7f8ab43367bf5ed7b3b5173523f44fcca2
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -90,7 +98,7 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/Routes/LICENSE.txt
+/usr/share/package-licenses/Routes/9307dc7f8ab43367bf5ed7b3b5173523f44fcca2
 
 %files python
 %defattr(-,root,root,-)

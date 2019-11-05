@@ -1,1 +1,8 @@
 # This file contains recursive sources that require this package
+ceph
+cinder
+glance
+neutron
+nova
+os-ken
+oslo.service
