@@ -4,7 +4,7 @@
 #
 Name     : Routes
 Version  : 2.4.1
-Release  : 39
+Release  : 40
 URL      : https://files.pythonhosted.org/packages/33/38/ea827837e68d9c7dde4cff7ec122a93c319f0effc08ce92a17095576603f/Routes-2.4.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/33/38/ea827837e68d9c7dde4cff7ec122a93c319f0effc08ce92a17095576603f/Routes-2.4.1.tar.gz
 Summary  : Routing Recognition and Generation Tools
@@ -26,12 +26,8 @@ BuildRequires : webob-python
 BuildRequires : webtest-python
 
 %description
-URL's to Controllers/Actions and generating URL's. Routes makes it easy to
-        create pretty and concise URL's that are RESTful with little effort.
-        
-        Speedy and dynamic URL generation means you get a URL with minimal cruft
-        (no big dangling query args). Shortcut features like Named Routes cut down
-        on repetitive typing.
+routes-logo-haas.svg
+Routes logo by Christoph Boehme, 2009.
 
 %package license
 Summary: license components for the Routes package.
@@ -55,6 +51,7 @@ python components for the Routes package.
 Summary: python3 components for the Routes package.
 Group: Default
 Requires: python3-core
+Provides: pypi(Routes)
 
 %description python3
 python3 components for the Routes package.
@@ -69,7 +66,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1574290503
+export SOURCE_DATE_EPOCH=1583220794
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
