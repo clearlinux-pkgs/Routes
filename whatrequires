@@ -7,4 +7,5 @@ neutron
 nova
 os-ken
 oslo.service
+ryu
 zVMCloudConnector
