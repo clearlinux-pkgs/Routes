@@ -1,3 +1,6 @@
-2.4.1
+2.5.1
 nose
+nose-python
+pip
+soupsieve-python
 webtest-python

@@ -1,5 +1,5 @@
 PKG_NAME := Routes
-URL = https://files.pythonhosted.org/packages/33/38/ea827837e68d9c7dde4cff7ec122a93c319f0effc08ce92a17095576603f/Routes-2.4.1.tar.gz
+URL = https://files.pythonhosted.org/packages/62/01/1504b710f68840f4152d460a4ffbc6b8265485b636235ddd72a8dfe686ae/Routes-2.5.1.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common

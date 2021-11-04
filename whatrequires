@@ -1,11 +1,2 @@
 # This file contains recursive sources that require this package
 ceph
-cinder
-glance
-heat
-neutron
-nova
-os-ken
-oslo.service
-ryu
-zVMCloudConnector
